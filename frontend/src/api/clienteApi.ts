@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { Cliente, CreateClienteDto, UpdateClienteDto } from '../types/cliente';
 
 const api = axios.create({
