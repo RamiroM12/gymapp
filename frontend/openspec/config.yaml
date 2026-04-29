@@ -1,0 +1,28 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Tech stack: React 18 + TypeScript + Vite + Tailwind CSS + Axios
+  Architecture: SPA con componentes reutilizables
+  Testing: No disponible actualmente
+  Style: ESLint + TypeScript strict
+
+strict_tdd: false
+
+rules:
+  proposal:
+    - Incluir alcance y approach
+    - Identificar componentes afectados
+  specs:
+    - Usar formato Given/When/Then para escenarios
+    - Documentar cada funcionalidad claramente
+  design:
+    - Mantener consistencia con componentes existentes
+    - Usar la misma estructura de archivos
+  tasks:
+    - Agrupar por tipo de recurso
+    - Mantener tareas pequeñas
+  apply:
+    - Seguir patrones existentes de código
+  verify:
+    - Verificar que compile correctamente
