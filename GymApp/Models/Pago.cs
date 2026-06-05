@@ -17,7 +17,7 @@ namespace GymApp.Models
         public int MetodoPagoId { get; set; }
 
         [Required]
-        public DateTime FechaPago { get; set; } = DateTime.Now;
+        public DateTime FechaPago { get; set; } = DateTime.UtcNow;
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]

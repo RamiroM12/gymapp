@@ -21,7 +21,7 @@ namespace GymApp.Models
         [MaxLength(150)]
         public string Email { get; set; }
 
-        public DateTime FechaRegistro { get; set; } = DateTime.Now;
+        public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
 
         public bool Activo { get; set; } = true;
 
