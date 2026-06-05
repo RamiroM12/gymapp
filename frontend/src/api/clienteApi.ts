@@ -1,9 +1,5 @@
-import axios from 'axios';
+import { api, isAxiosError } from './client';
 import { Cliente, CreateClienteDto, UpdateClienteDto } from '../types/cliente';
-
-const api = axios.create({
-  baseURL: '/api',
-});
 
 export const clienteApi = {
   getAll: () => api.get<Cliente[]>('/Cliente/GetAll').then(res => res.data),
@@ -13,7 +9,7 @@ export const clienteApi = {
       const response = await api.get<Cliente>(`/Cliente/GetById/${id}`);
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
+      if (isAxiosError(error)) {
         console.error('Error fetching cliente:', error.message);
       }
       return null;
@@ -29,8 +25,6 @@ export const clienteApi = {
   desactivate: (id: number) => 
     api.put(`/Cliente/DesactivateCliente/${id}`),
   
-  activate: (id: number) => 
+  activate: (id: number) =>
     api.put(`/Cliente/ActivateCliente/${id}`),
 };
-
-export default api;

@@ -1,9 +1,5 @@
-import axios from 'axios';
+import { api } from './client';
 import { TipoMembresia, CreateTipoMembresiaDto } from '../types/tipoMembresia';
-
-const api = axios.create({
-  baseURL: '/api',
-});
 
 export const tipoMembresiaApi = {
   getAll: () => api.get<TipoMembresia[]>('/TipoMembresias/GetAll').then(res => res.data),
@@ -22,8 +18,6 @@ export const tipoMembresiaApi = {
   activate: (id: number) => 
     api.put(`/TipoMembresias/Activate/${id}`),
 
-  desactivate: (id: number) => 
+  desactivate: (id: number) =>
     api.put(`/TipoMembresias/Desactivate/${id}`),
 };
-
-export default api;

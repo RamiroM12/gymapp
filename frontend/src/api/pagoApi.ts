@@ -1,9 +1,5 @@
-import axios from 'axios';
+import { api } from './client';
 import { Pago, CreatePagoDto } from '../types/pago';
-
-const api = axios.create({
-  baseURL: '/api',
-});
 
 export const pagoApi = {
   getAll: () => api.get<Pago[]>('/Pagos/GetAll').then(res => res.data),
@@ -26,8 +22,6 @@ export const pagoApi = {
   exportAll: () => 
     api.get('/ExcelExport/ExportPayments', { responseType: 'blob' }).then(res => res.data),
   
-  exportByDateRange: (startDate: string, endDate: string) => 
+  exportByDateRange: (startDate: string, endDate: string) =>
     api.get(`/ExcelExport/ExportPaymentsByDate?startDate=${startDate}&endDate=${endDate}`, { responseType: 'blob' }).then(res => res.data),
 };
-
-export default api;

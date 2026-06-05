@@ -1,9 +1,5 @@
-import axios from 'axios';
+import { api } from './client';
 import { MembresiaDto, BuyMembresiaDto } from '../types/membresia';
-
-const api = axios.create({
-  baseURL: '/api',
-});
 
 export const membresiaApi = {
   getAll: () => api.get<MembresiaDto[]>('/Membresias/GetAll').then(res => res.data),
@@ -24,8 +20,6 @@ export const membresiaApi = {
   desactivate: (id: number) => 
     api.put<string>(`/Membresias/Desactivate/${id}`).then(res => res.data),
   
-  activate: (id: number) => 
+  activate: (id: number) =>
     api.put<string>(`/Membresias/Activate/${id}`).then(res => res.data),
 };
-
-export default api;
