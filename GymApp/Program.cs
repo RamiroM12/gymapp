@@ -13,7 +13,7 @@ builder.Services.AddScoped<IAutomatizacionService, AutomatizacionService>();
 builder.Services.AddScoped<IExcelExportService, ExcelExportService>();
 
 builder.Services.AddDbContext<GymAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 
