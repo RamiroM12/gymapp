@@ -65,11 +65,13 @@ namespace GymApp.Services
 
         public async Task<byte[]> ExportPaymentsAsync(DateTime startDate, DateTime endDate)
         {
+            // El controller ya normaliza los DateTime a Kind=Utc.
+            // No aplicar .Date acá: eso cambiaría el Kind a Unspecified y rompería Npgsql.
             var pagos = await _context.Pagos
                 .Include(p => p.Cliente)
                 .Include(p => p.Membresia)
                 .ThenInclude(m => m.TipoMembresia)
-                .Where(p => p.FechaPago >= startDate.Date && p.FechaPago < endDate.Date.AddDays(1))
+                .Where(p => p.FechaPago >= startDate && p.FechaPago < endDate)
                 .ToListAsync();
 
             using var package = new ExcelPackage();

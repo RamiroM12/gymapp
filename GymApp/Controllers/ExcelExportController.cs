@@ -42,11 +42,14 @@ namespace GymApp.Controllers
                     return BadRequest(new { message = "La fecha inicial no puede ser mayor a la fecha final" });
                 }
 
-                var fileContent = await _excelExportService.ExportPaymentsAsync(startDate, endDate);
-                
+                var startUtc = DateTime.SpecifyKind(startDate.Date, DateTimeKind.Utc);
+                var endUtc = DateTime.SpecifyKind(endDate.Date.AddDays(1), DateTimeKind.Utc);
+
+                var fileContent = await _excelExportService.ExportPaymentsAsync(startUtc, endUtc);
+
                 return File(
-                    fileContent, 
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
+                    fileContent,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     $"Pagos_{startDate:yyyyMMdd}_{endDate:yyyyMMdd}.xlsx"
                 );
             }
