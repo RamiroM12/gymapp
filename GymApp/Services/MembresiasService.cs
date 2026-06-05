@@ -73,8 +73,8 @@ namespace GymApp.Services
             {
                 ClienteId = clienteId,
                 TipoMembresiaId = tipoMembresiaId,
-                FechaInicio = DateTime.Now,
-                FechaFin = DateTime.Now.AddDays(tipoMem.DuracionDias),
+                FechaInicio = DateTime.UtcNow,
+                FechaFin = DateTime.UtcNow.AddDays(tipoMem.DuracionDias),
                 Activa = true
             };
 

@@ -48,7 +48,7 @@ namespace GymApp.Services
                 ClienteId = pagoDto.ClienteId,
                 MembresiaId = pagoDto.MembresiaId,
                 MetodoPagoId = pagoDto.MetodoPagoId,
-                FechaPago = DateTime.Now,
+                FechaPago = DateTime.UtcNow,
                 Monto = membresia.TipoMembresia.Precio,
                 Descripcion = string.IsNullOrEmpty(pagoDto.Descripcion)
                     ? $"Pago de membresía {membresia.TipoMembresia.Nombre} - {metodoPago.Nombre}"

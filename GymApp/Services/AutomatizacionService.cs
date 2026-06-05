@@ -44,7 +44,7 @@ namespace GymApp.Services
                 Apellido = dto.Apellido,
                 Telefono = dto.Telefono,
                 Email = dto.Email,
-                FechaRegistro = DateTime.Now,
+                FechaRegistro = DateTime.UtcNow,
                 Activo = true
             };
 
@@ -56,8 +56,8 @@ namespace GymApp.Services
             {
                 ClienteId = cliente.Id,
                 TipoMembresiaId = dto.TipoMembresiaId,
-                FechaInicio = DateTime.Now,
-                FechaFin = DateTime.Now.AddDays(tipoMembresia.DuracionDias),
+                FechaInicio = DateTime.UtcNow,
+                FechaFin = DateTime.UtcNow.AddDays(tipoMembresia.DuracionDias),
                 Activa = true
             };
 
@@ -70,7 +70,7 @@ namespace GymApp.Services
                 ClienteId = cliente.Id,
                 MembresiaId = membresia.Id,
                 MetodoPagoId = dto.MetodoPagoId,
-                FechaPago = DateTime.Now,
+                FechaPago = DateTime.UtcNow,
                 Monto = tipoMembresia.Precio,
                 Descripcion = $"Pago de membresía {tipoMembresia.Nombre} - {metodoPago.Nombre}",
                 Estado = "Completado"
@@ -124,8 +124,8 @@ namespace GymApp.Services
             {
                 ClienteId = dto.ClienteId,
                 TipoMembresiaId = dto.TipoMembresiaId,
-                FechaInicio = DateTime.Now,
-                FechaFin = DateTime.Now.AddDays(tipoMembresia.DuracionDias),
+                FechaInicio = DateTime.UtcNow,
+                FechaFin = DateTime.UtcNow.AddDays(tipoMembresia.DuracionDias),
                 Activa = true
             };
 
@@ -138,7 +138,7 @@ namespace GymApp.Services
                 ClienteId = dto.ClienteId,
                 MembresiaId = membresia.Id,
                 MetodoPagoId = dto.MetodoPagoId,
-                FechaPago = DateTime.Now,
+                FechaPago = DateTime.UtcNow,
                 Monto = tipoMembresia.Precio,
                 Descripcion = $"Pago de membresía {tipoMembresia.Nombre} - {metodoPago.Nombre}",
                 Estado = "Completado"

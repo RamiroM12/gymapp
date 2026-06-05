@@ -26,7 +26,7 @@ namespace GymApp.Services
                 Apellido = clienteDto.Apellido,
                 Telefono = clienteDto.Telefono,
                 Email = clienteDto.Email,
-                FechaRegistro = DateTime.Now,
+                FechaRegistro = DateTime.UtcNow,
                 Activo = true
             };
 
