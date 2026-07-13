@@ -3,6 +3,7 @@ import { Button, Card, Input, Badge, SkeletonCard, Skeleton } from '../component
 import { clienteApi, membresiaApi, pagoApi } from '../api';
 import { Cliente, UpdateClienteDto } from '../types/cliente';
 import { MembresiaDto } from '../types/membresia';
+import { getMembresiaStatus } from '../utils/membresiaStatus';
 import { Pago } from '../types/pago';
 import { ArrowLeft, Edit2, Save, X, User, CreditCard, DollarSign } from 'lucide-react';
 
@@ -249,9 +250,19 @@ export const ClienteDetallePage: React.FC<ClienteDetallePageProps> = ({ clienteI
                     <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
                       {m.tipoMembresiaNombre || `Membresía #${m.tipoMembresiaId}`}
                     </span>
-                    <Badge variant={m.activa ? 'success' : 'error'}>
-                      {m.activa ? 'Activa' : 'Inactiva'}
-                    </Badge>
+                    {(() => {
+                      const status = getMembresiaStatus(m.fechaFin, m.activa);
+                      return (
+                        <div className="flex flex-col items-end gap-1">
+                          <Badge variant={status.variant}>{status.label}</Badge>
+                          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                            {status.daysRemaining !== null && status.daysRemaining > 0
+                              ? `${status.daysRemaining} días restantes`
+                              : status.label}
+                          </span>
+                        </div>
+                      );
+                    })()}
                   </div>
                   <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
                     <p>Inicio: {new Date(m.fechaInicio).toLocaleDateString()}</p>

@@ -19,11 +19,13 @@ namespace GymApp.Services
             var membresias = await _context.Membresias
                 .Include(m => m.Cliente)
                 .Include(m => m.TipoMembresia)
-                .AsNoTracking()
                 .ToListAsync();
 
             if (membresias == null)
                 throw new Exception("No se encontraron membresias");
+
+            if (DeactivateExpiredMembresias(membresias))
+                await _context.SaveChangesAsync();
 
             return membresias.Select(m => new MembresiaDto
             {
@@ -43,9 +45,11 @@ namespace GymApp.Services
         {
             var membresias = await _context.Membresias
                 .Include(m => m.TipoMembresia)
-                .AsNoTracking()
                 .Where(m => m.ClienteId == clienteId)
                 .ToListAsync();
+
+            if (DeactivateExpiredMembresias(membresias))
+                await _context.SaveChangesAsync();
 
             return membresias.Select(m => new MembresiaDto
             {
@@ -58,6 +62,21 @@ namespace GymApp.Services
                 Activa = m.Activa
             }).ToList();
         }
+        private bool DeactivateExpiredMembresias(List<Membresia> membresias)
+        {
+            var now = DateTime.UtcNow;
+            var changed = false;
+            foreach (var m in membresias)
+            {
+                if (m.Activa && m.FechaFin.Date < now.Date)
+                {
+                    m.Activa = false;
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
         public async Task BuyMembresiaAsync(int clienteId, int tipoMembresiaId)
         {
             var tipoMem = await _context.TiposMembresia.FindAsync(tipoMembresiaId);

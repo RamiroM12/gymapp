@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button, Card, Input, Badge, Select, Autocomplete, Pagination, SkeletonCard } from '../components/ui';
 import { membresiaApi, clienteApi, tipoMembresiaApi, automatizacionApi } from '../api';
 import { MembresiaDto, Cliente, TipoMembresia } from '../types';
+import { getMembresiaStatus } from '../utils/membresiaStatus';
 
 const ITEMS_PER_PAGE = 9;
 
@@ -242,9 +243,19 @@ export const MembresiasPage: React.FC = () => {
           <Card key={membresia.id}>
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>{membresia.clienteNombre || `Cliente #${membresia.clienteId}`}</h3>
-              <Badge variant={membresia.activa ? 'success' : 'error'}>
-                {membresia.activa ? 'Activa' : 'Inactiva'}
-              </Badge>
+              {(() => {
+                const status = getMembresiaStatus(membresia.fechaFin, membresia.activa);
+                return (
+                  <div className="flex flex-col items-end gap-1">
+                    <Badge variant={status.variant}>{status.label}</Badge>
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      {status.daysRemaining !== null && status.daysRemaining > 0
+                        ? `${status.daysRemaining} días restantes`
+                        : status.label}
+                    </span>
+                  </div>
+                );
+              })()}
             </div>
             <div className="space-y-1 text-sm">
               <p style={{ color: 'var(--text-secondary)' }}>
